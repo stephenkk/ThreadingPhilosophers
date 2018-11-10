@@ -1,0 +1,16 @@
+
+public class Philosopher extends Thread{
+	private String name;
+	private int chopsticks;
+	
+	public Philosopher() {
+		this.name = name;
+		this.chopsticks = chopsticks;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
