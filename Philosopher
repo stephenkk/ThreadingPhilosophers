@@ -9,8 +9,12 @@ public class Philosopher extends Thread{
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+	Philosopher p0 = new Philosopher("Confucius");
+	Philosopher p1 = new Philosopher("Socrates");
+	Philosopher p2 = new Philosopher("Plato");
+	Philosopher p3 = new Philosopher("Descartes");
+	Philosopher p4 = new Philosopher("Sartre");
 	}
 
 }
