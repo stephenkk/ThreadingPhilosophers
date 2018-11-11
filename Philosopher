@@ -1,29 +1,37 @@
 
 public class Philosopher extends Thread{
 	private String name;
-	private int chopsticks;
+	int chopsticks = 5;
 	boolean hungry;
 	
 	
 	public Philosopher(String name) {
 		this.name = name;
-		this.chopsticks = chopsticks;
-		this.hungry = false;
+		this.hungry = true;
 		
 		
 	}
 	public void run() { // the run method shows who is eating.
 		
+		
+		if (chopsticks > 2) {
+			chopsticks = chopsticks -2;
+		System.out.println( name + " is eating...");
+		
 		long startTime = System.currentTimeMillis();
 	    while((System.currentTimeMillis()-startTime)<Math.random()*100) {
-		System.out.println( name + " is eating");
-		}
-	    
-	    run();
-		}
-	
-	public static void main(String[] args) {
+		hungry = true;
 		
+		}
+	    hungry = false;
+	    System.out.println( name + " is full and stopped eating");
+	    
+	    
+	    
+		}
+	}
+	public static void main(String[] args) {
+	int chopsticks = 5;
 
 	
 	Philosopher p0 = new Philosopher("Confucius");
@@ -39,3 +47,4 @@ public class Philosopher extends Thread{
 	p4.start();
 	}
 }
+
