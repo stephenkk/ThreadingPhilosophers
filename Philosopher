@@ -2,19 +2,40 @@
 public class Philosopher extends Thread{
 	private String name;
 	private int chopsticks;
+	boolean hungry;
 	
-	public Philosopher() {
+	
+	public Philosopher(String name) {
 		this.name = name;
 		this.chopsticks = chopsticks;
+		this.hungry = false;
+		
+		
 	}
-
+	public void run() { // the run method shows who is eating.
+		
+		long startTime = System.currentTimeMillis();
+	    while((System.currentTimeMillis()-startTime)<Math.random()*100) {
+		System.out.println( name + " is eating");
+		}
+	    
+	    run();
+		}
+	
 	public static void main(String[] args) {
 		
+
+	
 	Philosopher p0 = new Philosopher("Confucius");
 	Philosopher p1 = new Philosopher("Socrates");
 	Philosopher p2 = new Philosopher("Plato");
 	Philosopher p3 = new Philosopher("Descartes");
 	Philosopher p4 = new Philosopher("Sartre");
+	
+	p0.start();
+	p1.start();
+	p2.start();
+	p3.start();
+	p4.start();
 	}
-
 }
