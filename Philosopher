@@ -15,7 +15,7 @@ public class Philosopher extends Thread{
 	public void run() { // the run method shows who is eating.
 		
 		long startTime = System.currentTimeMillis();
-	    while((System.currentTimeMillis()-startTime)<Math.random()*100) {
+	    while((System.currentTimeMillis()-startTime)<Math.random()*10) {
 		System.out.println( name + " is eating");
 		}
 	    
@@ -25,16 +25,17 @@ public class Philosopher extends Thread{
 	public static void main(String[] args) {
 		
 
-	
+	//Philosopher objects
 	Philosopher p0 = new Philosopher("Confucius");
 	Philosopher p1 = new Philosopher("Socrates");
 	Philosopher p2 = new Philosopher("Plato");
 	Philosopher p3 = new Philosopher("Descartes");
 	Philosopher p4 = new Philosopher("Sartre");
 	
+	//Philosopher array
 	Philosopher[] WiseTable = {p0, p1, p2, p3, p4};
 	
-	p0.start();
+	p0.start();		//each objects starts the run()
 	p1.start();
 	p2.start();
 	p3.start();
