@@ -1,15 +1,16 @@
 
 public class Philosopher extends Thread{
 	private String name;
-	private int chopsticks;
-	boolean hungry;
+	private boolean eating;
+	private boolean hungry;
+	private boolean thinking;
 	
 	
 	public Philosopher(String name) {
 		this.name = name;
-		this.chopsticks = chopsticks;
+		this.eating = false;
 		this.hungry = false;
-		
+		this.hungry = false;
 		
 	}
 	public void run() { // the run method shows who is eating.
