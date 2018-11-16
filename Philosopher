@@ -1,12 +1,14 @@
 
 public class Philosopher extends Thread{
+	private int philNumber;
 	private String name;
 	private boolean eating;
 	private boolean hungry;
 	private boolean thinking;
 	
 	
-	public Philosopher(String name) {
+	public Philosopher(int philNumber, String name) {
+		this.philNumber=0;
 		this.name = name;
 		this.eating = false;
 		this.hungry = false;
@@ -15,16 +17,18 @@ public class Philosopher extends Thread{
 	}
 	public void run() { // the run method will start the philospher eating if the conditions are correct 
 		
-		if this.eating == false
-		this.eating = true
 		
+		if (Philospher[this.philNumber-1])
+		if (this.eating == false)
+		this.eating = true;
 		
-		long startTime = System.currentTimeMillis();
-	    while((System.currentTimeMillis()-startTime)<Math.random()*10) {
 		System.out.println( name + " is eating");
+		long startTime = System.currentTimeMillis();
+	    while((System.currentTimeMillis()-startTime)<Math.random()*100) {
+		
 		}
 		this.thinking = true;
-	    System.out.println( this.name + " is thinking"
+	    System.out.println( this.name + " is thinking");
 	    run();
 		}
 	
@@ -32,11 +36,11 @@ public class Philosopher extends Thread{
 		
 
 	//Philosopher objects
-	Philosopher p0 = new Philosopher("Confucius");
-	Philosopher p1 = new Philosopher("Socrates");
-	Philosopher p2 = new Philosopher("Plato");
-	Philosopher p3 = new Philosopher("Descartes");
-	Philosopher p4 = new Philosopher("Sartre");
+	Philosopher p0 = new Philosopher(0,"Confucius");
+	Philosopher p1 = new Philosopher(1, "Socrates");
+	Philosopher p2 = new Philosopher(2, "Plato");
+	Philosopher p3 = new Philosopher(3, "Descartes");
+	Philosopher p4 = new Philosopher(4, "Sartre");
 	
 	//Philosopher array
 	Philosopher[] WiseTable = {p0, p1, p2, p3, p4};
