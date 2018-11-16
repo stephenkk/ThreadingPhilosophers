@@ -1,7 +1,7 @@
 
 
 public class Philosopher extends Thread{
-	private int philNumber;
+	public int philNumber;
 	private String name;
 	private boolean eating;
 	private boolean hungry;
@@ -9,36 +9,44 @@ public class Philosopher extends Thread{
 	
 	
 	public Philosopher(int philNumber, String name) {
-		this.philNumber=0;
+		this.philNumber = 0;
 		this.name = name;
 		this.eating = false;
 		this.hungry = false;
 		this.thinking = false;
 		
-	}
-	public void run() { // the run method will start the philospher eating if the conditions are correct 
 		
-		}
+	}
+	
+
+	public void run() { // the run method will start the philosopher eating if the conditions are correct 
+	
+		//philNumber = this.philNumber;
+		System.out.println(philNumber );
+				//is_left_neighbor_hungry(philNumber);
+	
+	
+	}
+			
+		
 	
 		
 	public static void main(String[] args) {
-		
 		//Philosopher objects
-				Philosopher p0 = new Philosopher(0,"Confucius");
-				Philosopher p1 = new Philosopher(1, "Socrates");
-				Philosopher p2 = new Philosopher(2, "Plato");
-				Philosopher p3 = new Philosopher(3, "Descartes");
-				Philosopher p4 = new Philosopher(4, "Sartre");
-	
-		//Philosopher array
-		Philosopher[] WiseTable = {p0, p1, p2, p3, p4};
+		Philosopher p0 = new Philosopher(0,"Confucius");
+		Philosopher p1 = new Philosopher(1, "Socrates");
+		Philosopher p2 = new Philosopher(2, "Plato");
+		Philosopher p3 = new Philosopher(3, "Descartes");
+		Philosopher p4 = new Philosopher(4, "Sartre");
 		
-		p0.start();		//each objects starts the run()
-		p1.start();
+		
+				//Philosopher array
+				//Philosopher[] WiseTable = {p0, p1, p2, p3, p4};
+		p3.start();		//each objects starts the run()
+		/*p1.start();
 		p2.start();
 		p3.start();
-		p4.start();
-		
+		p4.start();*/
 		
 		
 		
@@ -46,12 +54,9 @@ public class Philosopher extends Thread{
 	
 	}
 	
-	public void eat() {
-		int philNbr = this.philNumber;
+	//public void is_left_neighbor_hungry(int philNumber) {
+		//System.out.println(philNumber - 1);
 		
-		long startTime = System.currentTimeMillis();
-	    while((System.currentTimeMillis()-startTime)<Math.random()*100); 
-		
-	}
-
+	
+	//}
 }
