@@ -7,7 +7,7 @@ public class Philosopher extends Thread{
 	public boolean thinking;
 	
 	
-	public Philosopher(int philNumber, String name) {
+	public Philosopher(int philNumber, String name, boolean eating) {
 		this.philNumber = philNumber;
 		this.name = name;
 		this.eating = eating;
@@ -18,20 +18,23 @@ public class Philosopher extends Thread{
 	
 
 	public void run() { // the run method will start the philosopher eating if the conditions are correct 
-		boolean clear_left;
-		boolean clear_right;
-		clear_left = check_left(this.philNumber);
-		clear_right = check_right(this.philNumber);
-		System.out.println(clear_left);
-		System.out.println(clear_right);
+		boolean eating_left;
+		boolean eating_right;
+		eating_left = check_left(this.philNumber);
+		eating_right = check_right(this.philNumber);
+		if (eating_left == false && eating_right == false)
+				 think();
+			
+		System.out.println(this.hungry + this.name);
+			
 	}
 			
 	 //Philosopher objects
-			static Philosopher p0 = new Philosopher(0,"Confucius");
-			static Philosopher p1 = new Philosopher(1, "Socrates");
-			static Philosopher p2 = new Philosopher(2, "Plato");
-			static Philosopher p3 = new Philosopher(3, "Descartes");
-			static Philosopher p4 = new Philosopher(4, "Sartre");
+		static Philosopher p0 = new Philosopher(0,"Confucius", false);
+		static Philosopher p1 = new Philosopher(1, "Socrates", false);
+		static Philosopher p2 = new Philosopher(2, "Plato", false);
+		static Philosopher p3 = new Philosopher(3, "Descartes", false);
+		static Philosopher p4 = new Philosopher(4, "Sartre", false );
 
 			//Philosopher array
 			static Philosopher[] WiseTable = {p0, p1, p2, p3, p4};			
@@ -40,32 +43,49 @@ public class Philosopher extends Thread{
 	public static void main(String[] args) {
 			
 		
-		p0.start();		//each objects starts the run()
+		//p0.start();		//each objects starts the run()
 		//p1.start();
-		//p2.start();
+		p2.start();
 		//p3.start();
 		//p4.start();		
 }
 	public boolean check_right(int philNumber) {
-		boolean not_eating_to_the_right;
+		boolean eating_to_the_right;
 		if (this.philNumber == 4)
-			not_eating_to_the_right = WiseTable[0].eating;
+			eating_to_the_right = WiseTable[0].eating;
 		else 
-			not_eating_to_the_right = WiseTable[this.philNumber + 1].eating;
-		return not_eating_to_the_right;
+			eating_to_the_right = WiseTable[this.philNumber + 1].eating;
+		return eating_to_the_right;
 	}
 	
 	public boolean check_left(int philNumber) {
-		boolean not_eating_to_the_left;
+		boolean eating_to_the_left;
 		if (this.philNumber == 0)
-			not_eating_to_the_left = WiseTable[4].eating;
+			eating_to_the_left = WiseTable[4].eating;
 		else 
-			not_eating_to_the_left = WiseTable[this.philNumber - 1].eating;
-		return not_eating_to_the_left;
+			eating_to_the_left = WiseTable[this.philNumber - 1].eating;
+		return eating_to_the_left;
+		
+		
 		
 	}
+	public void think() {
+		long startTime = System.currentTimeMillis();
+		System.out.println(this.name + " is thinking...");
+	    while((System.currentTimeMillis()- startTime)
+	    		< 2500) {
+	    	this.hungry = false;
+	    }
+	    	this.hungry = true;
+	    	
+	    
+	}
+	
+	
+		
 	}
 	
 
 	
+
 
