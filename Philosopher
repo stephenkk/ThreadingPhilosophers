@@ -5,6 +5,7 @@ public class Philosopher extends Thread{
 	public boolean hungry;
 	public boolean thinking;
 	
+	
 	//constructor created to require initial values to be specified
 	//for philosopher number, name, 
 	//whether he is eating, and whether he is hungry.
@@ -53,6 +54,11 @@ public class Philosopher extends Thread{
 				
 		
 	public static void main(String[] args) {
+		boolean stick0=true;	//one boolean for each chopstick
+		boolean stick1=true;	//true means not being used.
+		boolean stick2=true;
+		boolean stick3=true;
+		boolean stick4=true;
 			
 		
 		p0.start();		//each objects starts the run()
@@ -100,7 +106,21 @@ public class Philosopher extends Thread{
 	}
 	    	
 	    	public void eat() {
-	    		System.out.println("#" + (this.philNumber + 1) + ", " + 
+	    		if (this.philNumber == 0) {
+	    			stick4 = false;
+	    			System.out.println("#"+this.philNumber + " "
+	    		+ this.name	+ "just picked up the chopstick to "
+	    					+ "his left");
+	    			stick0 = false;
+	    			System.out.println("#"+this.philNumber + " "
+	    		+ this.name	+ "just picked up the chopstick to "
+	    					+ "his right");	
+	    		}
+	    		
+	    		
+	    		
+	    		/*System.out.println("#" + (this
+	    		 * .philNumber + 1) + ", " + 
 	    				this.name +	" is eating...");
 	    		double startTime = System.currentTimeMillis() + 
 	    				Math.random() * 7500;
@@ -113,14 +133,26 @@ public class Philosopher extends Thread{
 	    	    this.eating = false;	
 	    	    this.hungry = false;
 	    	    
-	    	    think();
+	    	    */think();
+	    	}
+	    	
+	    	public void identify_sticks() {
+	    		int right_stick, left_stick;
+	    		if (this.philNumber == 0) {
+	    			right_stick = 0;
+	    			left_stick = 4;}
+	    		if (this.philNumber == 1) {
+	    			right_stick = 1;
+	    			left_stick = 0;}
+	    		if (this.philNumber == 2) {
+	    			right_stick = 2;
+	    			left_stick = 1;}
+	    		if (this.philNumber == 3) {
+	    			right_stick = 3;
+	    			left_stick = 2;}
+	    		if (this.philNumber == 4) {
+	    			right_stick = 4;
+	    			left_stick = 3;}
 	    	}
 	}
 	
-	
-		
-	
-	
-
-	
-
