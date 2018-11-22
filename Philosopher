@@ -1,9 +1,17 @@
 public class Philosopher extends Thread{
-	public int philNumber;
-	public String name;
-	public boolean eating;
-	public boolean hungry;
-	public boolean thinking;
+	private int philNumber;
+	private String name;
+	private boolean eating;
+	private boolean hungry;
+	private boolean thinking;
+	boolean stick0=true;	//one boolean for each chopstick
+	boolean stick1=true;	//true means not being used.
+	boolean stick2=true;
+	boolean stick3=true;
+	boolean stick4=true;
+	
+		
+	
 	
 	
 	//constructor created to require initial values to be specified
@@ -22,7 +30,8 @@ public class Philosopher extends Thread{
 	//neighbors is eating
 
 	public void run() { 
-		boolean eating_left;
+		eat();
+		/*boolean eating_left;
 		boolean eating_right;
 		eating_left = check_left(this.philNumber);
 		eating_right = check_right(this.philNumber);
@@ -36,7 +45,7 @@ public class Philosopher extends Thread{
 		
 		
 		run(); //recursive call to continually run the run()
-				//method
+		*/		//method
 			
 	}
 			
@@ -54,18 +63,14 @@ public class Philosopher extends Thread{
 				
 		
 	public static void main(String[] args) {
-		boolean stick0=true;	//one boolean for each chopstick
-		boolean stick1=true;	//true means not being used.
-		boolean stick2=true;
-		boolean stick3=true;
-		boolean stick4=true;
-			
 		
 		p0.start();		//each objects starts the run()
-		p1.start();
+		//p1.start();
 		p2.start();
 		p3.start();
-		p4.start();		
+		//p4.start();	
+		
+		
 }
 	public boolean check_right(int philNumber) {
 		boolean eating_to_the_right;
@@ -108,15 +113,34 @@ public class Philosopher extends Thread{
 	    	public void eat() {
 	    		if (this.philNumber == 0) {
 	    			stick4 = false;
-	    			System.out.println("#"+this.philNumber + " "
-	    		+ this.name	+ "just picked up the chopstick to "
-	    					+ "his left");
+	    			System.out.println(this.name + "'s left stick " 
+	    					+ stick4);
+	    			
 	    			stick0 = false;
-	    			System.out.println("#"+this.philNumber + " "
-	    		+ this.name	+ "just picked up the chopstick to "
-	    					+ "his right");	
+	    			
+	    			System.out.println(this.name + "'s right stick " 
+	    					+ stick0);	
 	    		}
-	    		
+	    		if (this.philNumber == 3) {
+	    			stick2 = false;
+	    			System.out.println(this.name + "'s left stick " 
+	    					+ stick2);
+	    			
+	    			stick3 = false;
+	    			
+	    			System.out.println(this.name + "'s right stick " 
+	    					+ stick3);	
+	    		}
+	    		if (this.philNumber == 2) {
+	    			stick1 = false;
+	    			System.out.println(this.name + "'s left stick " 
+	    					+ stick1);
+	    			
+	    			stick2 = false;
+	    			
+	    			System.out.println(this.name + "'s right stick " 
+	    					+ stick2);	
+	    		}
 	    		
 	    		
 	    		/*System.out.println("#" + (this
@@ -133,26 +157,10 @@ public class Philosopher extends Thread{
 	    	    this.eating = false;	
 	    	    this.hungry = false;
 	    	    
-	    	    */think();
+	    	    think();*/
 	    	}
 	    	
-	    	public void identify_sticks() {
-	    		int right_stick, left_stick;
-	    		if (this.philNumber == 0) {
-	    			right_stick = 0;
-	    			left_stick = 4;}
-	    		if (this.philNumber == 1) {
-	    			right_stick = 1;
-	    			left_stick = 0;}
-	    		if (this.philNumber == 2) {
-	    			right_stick = 2;
-	    			left_stick = 1;}
-	    		if (this.philNumber == 3) {
-	    			right_stick = 3;
-	    			left_stick = 2;}
-	    		if (this.philNumber == 4) {
-	    			right_stick = 4;
-	    			left_stick = 3;}
-	    	}
+	    	   	
 	}
+	
 	
