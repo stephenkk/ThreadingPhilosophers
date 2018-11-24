@@ -10,30 +10,21 @@ public class Philosopher extends Thread{
 	Semaphore sem;
 	
 	private int philNumber;
-	private String name;
-	private boolean eating;
-	private boolean hungry;
-	private boolean thinking;
 	static boolean stick0=true;	//one boolean for each chopstick
-	boolean stick1=true;	//true means not being used.
-	boolean stick2=true;
-	boolean stick3=true;
-	boolean stick4=true;
+	static boolean stick1=true;	//true means not being used.
+	static boolean stick2=true;
+	static boolean stick4=true;
 	
 		
 	
 	
 	
 	//constructor created to require initial values to be specified
-	//for philosopher number, name, 
-	//whether he is eating, and whether he is hungry.
-	public Philosopher(int philNumber, String name, boolean eating, boolean hungry) {
+	//for philosopher number
+	public Philosopher(int philNumber) {
 		this.sem = sem;
 		this.philNumber = philNumber;
-		this.name = name;
-		this.eating = eating;
-		this.hungry = hungry;
-		this.thinking = thinking;
+		
 		
 	}	
 	// the run method will start a philosopher eating 
@@ -42,181 +33,79 @@ public class Philosopher extends Thread{
 
 	public void run() {
 		if (this.philNumber == 0) {
+			try {
+				sem.acquire();
+				if (stick4 == true && stick0 == true) {
+					Shared.count++;
+					eat();
+				}
+					
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
 			
-			if (stick4 == true && stick0 == true && this.hungry == true)
-			eat();
 		}
 		if (this.philNumber == 1) {
-			
-			if (stick0 == true && stick1 == true && this.hungry == true)
-			eat();
+			try {
+				sem.acquire();
+				if (stick0 == true && stick1 == true) {
+					Shared.count++;
+					eat();
+				}
+					
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
 		}
-		if (this.philNumber == 2) {
-			if (stick1 == true && stick2 == true && this.hungry == true)
-			eat();
 		}
-		if (this.philNumber == 3) {
-			if (stick2 == true && stick3 == true && this.hungry == true)
-			eat();
-		}
-		if (this.philNumber == 4) {
-			if (stick3 == true && stick4 == true && this.hungry == true)
-			eat();
-		}
-		/*boolean eating_left;
-		boolean eating_right;
-		eating_left = check_left(this.philNumber);
-		eating_right = check_right(this.philNumber);
-		if ((eating_left == false && eating_right == false) 
-				&& this.hungry == true)
-				 eat();
-			
-		else 
-			think();
-			
 		
+		static Philosopher p0 = new Philosopher(0);
+		static Philosopher p1 = new Philosopher(1);
 		
-		run(); //recursive call to continually run the run()
-		*/		//method
-			
-	}
-			
-	 //Philosopher objects. 1 and 3 are initialized at false
-	// to prevent all five philosophers from eating simultaneously
-	// at start.
-		static Philosopher p0 = new Philosopher(0,"Confucius", false, true);
-		static Philosopher p1 = new Philosopher(1, "Socrates", true, true);
-		static Philosopher p2 = new Philosopher(2, "Plato", false, true);
-		static Philosopher p3 = new Philosopher(3, "Descartes", true, true);
-		static Philosopher p4 = new Philosopher(4, "Simone de Beauvoire", false, true );
 
 			//Philosopher array
-			static Philosopher[] WiseTable = {p0, p1, p2, p3, p4};			
+			static Philosopher[] WiseTable = {p0, p1};			
 				
 		
 	public static void main(String[] args) {
-		System.out.println("stick0 = " + stick0);
+		System.out.println("stick0 = " + stick0 + " stick1 = " + stick1);
 		
 		p0.start();		//each objects starts the run()
 		p1.start();
-		//p2.start();
-		//p3.start();
-		//p4.start();	
+		
 		
 		
 }
 	
-	public void think() {
-		System.out.println("#" + (this.philNumber + 1) + ", " + 
-				this.name +	" is thinking...");
-		double startTime = System.currentTimeMillis() + 
-				Math.random() * 7500 + 7500;
-	    while(startTime 
-	    	> System.currentTimeMillis())
-	    		  {
-	    	
-	    	this.hungry = false;
-	    }
-	    	this.hungry = true;
-	    	
-	    	System.out.println("#" + (this.philNumber + 1) + ", " + 
-					this.name +	" is hungry");
-	    	
-	}
-	    	
 	    	public void eat() {
 	    		if (this.philNumber == 0) {
 	    			System.out.println("p0 started...");
 	    			stick4 = false;
-	    			System.out.println(this.philNumber + " " + this.name + "'s left stick, stick 4 is " 
-	    					+ stick4);
+	    			System.out.println(this.philNumber + "picked up " + stick4);
+	    					
 	    			
 	    			stick0 = false;
 	    			
-	    			System.out.println(this.philNumber + " " + this.name + "'s right stick, stick 0 is  " 
-	    					+ stick0);	
+	    			System.out.println(this.philNumber + "picked up " + stick0);	
 	    		}
 	    		if (this.philNumber == 1) {
 	    			System.out.println("p1 started...");
 	    			stick0 = false;
-	    			System.out.println(this.philNumber + " " + this.name + "'s left stick, stick 0 is  " 
-	    					+ stick0);
+	    			System.out.println(this.philNumber + "picked up " + stick0);
 	    			
 	    			stick1 = false;
 	    			
-	    			System.out.println(this.philNumber + " " + this.name + "'s right stick, stick 1 " 
-	    					+ stick1);	
+	    			System.out.println(this.philNumber + "picked up " + stick1);
 	    		}
-	    		if (this.philNumber == 2) {
-	    			stick1 = false;
-	    			System.out.println(this.philNumber + " " + this.name + "'s left stick " 
-	    					+ stick1);
-	    			
-	    			stick2 = false;
-	    			
-	    			System.out.println(this.philNumber + " " + this.name + "'s right stick " 
-	    					+ stick2);	
-	    		}
-	    		if (this.philNumber == 3) {
-	    			stick2 = false;
-	    			System.out.println(this.philNumber + " " + this.name + "'s left stick " 
-	    					+ stick2);
-	    			
-	    			stick3 = false;
-	    			
-	    			System.out.println(this.philNumber + " " + this.name + "'s right stick " 
-	    					+ stick3);	
-	    		}
-	    		if (this.philNumber == 4) {
-	    			stick3 = false;
-	    			System.out.println(this.philNumber + " " + this.name + "'s left stick " 
-	    					+ stick3);
-	    			
-	    			stick0 = false;
-	    			
-	    			System.out.println(this.philNumber + " " + this.name + "'s right stick " 
-	    					+ stick0);	
-	    		}
-	    		/*System.out.println("#" + (this
-	    		 * .philNumber + 1) + ", " + 
-	    				this.name +	" is eating...");
-	    		double startTime = System.currentTimeMillis() + 
-	    				Math.random() * 7500;
-	    	    while(startTime 
-	    	    	> System.currentTimeMillis())
-	    	    		  {
-	    	    	
-	    	    	this.eating = true;
-	    	    }
-	    	    this.eating = false;	
-	    	    this.hungry = false;
-	    	    
-	    	    think();*/
-	    		
-	    		
-	    	}
-	    	public boolean check_right(int philNumber) {
-	    		boolean eating_to_the_right;
-	    		if (this.philNumber == 4)
-	    			eating_to_the_right = WiseTable[0].eating;
-	    		else 
-	    			eating_to_the_right = WiseTable[this.philNumber + 1].eating;
-	    		return eating_to_the_right;
-	    	}
-	    	
-	    	public boolean check_left(int philNumber) {
-	    		boolean eating_to_the_left;
-	    		if (this.philNumber == 0)
-	    			eating_to_the_left = WiseTable[4].eating;
-	    		else 
-	    			eating_to_the_left = WiseTable[this.philNumber - 1].eating;
-	    		return eating_to_the_left;
 	    		
 	    		
 	    		
 	    	}
 	    	   	
 	}
+	
 	
 		
 	
