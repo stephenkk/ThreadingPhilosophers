@@ -1,9 +1,6 @@
 public class Philosopher extends Thread{
 	public int philNumber;
 	public String name;
-	public boolean eating;
-	public boolean hungry;
-	public boolean thinking;
 	static boolean stick0=true;	//one boolean for each chopstick
 	static boolean stick1=true;	//true means not being used.
 	static boolean stick2=true;
@@ -13,12 +10,10 @@ public class Philosopher extends Thread{
 	//constructor created to require initial values to be specified
 	//for philosopher number, name, 
 	//whether he is eating, and whether he is hungry.
-	public Philosopher(int philNumber, String name, boolean eating, boolean hungry) {
+	public Philosopher(int philNumber, String name) {
 		this.philNumber = philNumber;
 		this.name = name;
-		this.eating = eating;
-		this.hungry = hungry;
-		this.thinking = thinking;
+		
 
 	}	
 	// the run method will start a philosopher eating 
@@ -26,19 +21,33 @@ public class Philosopher extends Thread{
 	//neighbors is eating
 
 	public void run() { 
-		System.out.println("p"+ this.philNumber + " is starting");
+		
 
 		if (this.philNumber == 0) {
-			if (stick4 == true && stick0 == true)
-				zero_pick_up_sticks();
+			//if (stick4 == true && stick0 == true) {
+				
+				pick_up_sticks(this.philNumber);
+			//}
 		}
 		if (this.philNumber == 1) {
-			if (stick0 == true && stick1 == true)
-
-				zero_pick_up_sticks();
-
+			//if (stick0 == true && stick1 == true) {
+				
+				pick_up_sticks(this.philNumber);
+			//}
 		}
-
+		if (this.philNumber == 2) {
+					//if (stick0 == true && stick1 == true) {
+						
+				pick_up_sticks(this.philNumber);
+					//}
+				}
+		if (this.philNumber == 3) {
+			//if (stick0 == true && stick1 == true) {
+				
+		pick_up_sticks(this.philNumber);
+			//}
+		}
+			run();
 	}	
 
 
@@ -47,15 +56,13 @@ public class Philosopher extends Thread{
 	//Philosopher objects. 1 and 3 are initialized at false
 	// to prevent all five philosophers from eating simultaneously
 	// at start.
-	static Philosopher p0 = new Philosopher(0,"Confucius", false, false);
-	static Philosopher p1 = new Philosopher(1, "Socrates", true, true);
-	static Philosopher p2 = new Philosopher(2, "Plato", false, false);
-	static Philosopher p3 = new Philosopher(3, "Descartes", true, true);
-	static Philosopher p4 = new Philosopher(4, "Sartre", false, false );
+	static Philosopher p0 = new Philosopher(0,"Confucius");
+	static Philosopher p1 = new Philosopher(1, "Socrates");
+	static Philosopher p2 = new Philosopher(2, "Plato");
+	static Philosopher p3 = new Philosopher(3, "Descartes");
+	static Philosopher p4 = new Philosopher(4, "Simone de Beauvoire");
 
-	//Philosopher array
-	static Philosopher[] WiseTable = {p0, p1, p2, p3, p4};			
-
+	
 
 	public static void main(String[] args) {
 
@@ -63,69 +70,139 @@ public class Philosopher extends Thread{
 
 		p0.start();		//each objects starts the run()
 		p1.start();
-		//p2.start();
-		//p3.start();
+		p2.start();
+		p3.start();
 		//p4.start();		
 
 	}
 
-
-
-	public void eat() {
-
-		one_pick_up_sticks();
-	}
-
-
-
-
-
-	synchronized public void zero_pick_up_sticks() {
-		if (this.philNumber == 0)  {
-			System.out.println("Phil"+ this.philNumber + " stick4 = " + stick4 + " stick0 = " + stick0);
+	synchronized public static void pick_up_sticks(int phil_instance) {
+		if( (phil_instance == 0) && stick4 == true && stick0 == true) {
+			System.out.println("Phil"+ phil_instance + " stick4 = " + stick4 + " stick0 = " + stick0);
 			stick4 = false;
-			System.out.println("Phil" + this.philNumber + " picked up the chopstick to his"
+			System.out.println("Phil" + phil_instance + " picked up the chopstick to his"
 					+ " left");
-			System.out.println("Phil" + this.philNumber + " stick 4 = " + stick4);
+			System.out.println("Phil" + phil_instance + " stick 4 = " + stick4);
 			stick0 = false;
-			System.out.println("Phil" + this.philNumber + " stick 0 = " + stick0);
+			System.out.println("Phil" +phil_instance+ " stick 0 = " + stick0);
 
-			System.out.println("Phil" + this.philNumber + " picked up the chopstick to his "
+			System.out.println("Phil" +phil_instance+ " picked up the chopstick to his "
 					+ " right");
+			System.out.println("p" + phil_instance + 
+						"is eating...");
+			double startTime = System.currentTimeMillis() + 
+					Math.random() * 7500 + 7500;
+			while(startTime 
+			    	> System.currentTimeMillis())
+			{
+			    }
+			stick4 = true;
+			System.out.println("Phil" + phil_instance + " put down the chopstick to his"
+					+ " left");
+			stick0 = true;
+			System.out.println("Phil" +phil_instance+ " put down the chopstick to his "
+					+ " right");
+			think_and_get_hungry(phil_instance);
+			    	
+			    	
+			    	
 		}
-		else if (this.philNumber == 1) {
-			System.out.println("Phil" + this.philNumber + " stick0 = " + stick0 + " stick1 = " + stick1);
+		else if (phil_instance == 1 && stick0 == true && stick1 == true) {
+			System.out.println("Phil" +phil_instance+ " stick0 = " + stick0 + " stick1 = " + stick1);
 			stick0 = false;
-			System.out.println("Phil" + this.philNumber + " stick 0 = " + stick0);
-			System.out.println("Phil" + this.philNumber + " picked up the chopstick to his"
+			System.out.println("Phil" +phil_instance+ " stick 0 = " + stick0);
+			System.out.println("Phil" +phil_instance+ " picked up the chopstick to his"
 					+ " left");
 			stick1 = false;
-			System.out.println("Phil" + this.philNumber + " stick 1 = " + stick1);
-			System.out.println("Phil" + this.philNumber + " picked up the chopstick to his"
+			System.out.println("Phil" +phil_instance+ " stick 1 = " + stick1);
+			System.out.println("Phil" +phil_instance+ " picked up the chopstick to his"
 					+ " right");
+			double startTime = System.currentTimeMillis() + 
+					Math.random() * 7500 + 7500;
+			while(startTime 
+			    	> System.currentTimeMillis())
+			{
+			    }
+			stick0 = true;
+			System.out.println("Phil" + phil_instance + " put down the chopstick to his"
+					+ " left");
+			stick1 = true;
+			System.out.println("Phil" +phil_instance+ " put down the chopstick to his "
+					+ " right");
+			think_and_get_hungry(phil_instance);
+			    	
 		}
+		if( (phil_instance == 2) && stick1 == true && stick2 == true) {
+			System.out.println("Phil"+ phil_instance + " stick1 = " + stick1 + " stick2 = " + stick2);
+			stick1 = false;
+			System.out.println("Phil" + phil_instance + " picked up the chopstick to his"
+					+ " left");
+			System.out.println("Phil" + phil_instance + " stick 1 = " + stick1);
+			stick2 = false;
+			System.out.println("Phil" +phil_instance+ " stick 2 = " + stick2);
+
+			System.out.println("Phil" +phil_instance+ " picked up the chopstick to his "
+					+ " right");
+			System.out.println("p" + phil_instance + 
+						"is eating...");
+			double startTime = System.currentTimeMillis() + 
+					Math.random() * 7500 + 7500;
+			while(startTime 
+			    	> System.currentTimeMillis())
+			{
+			    }
+			stick1 = true;
+			System.out.println("Phil" + phil_instance + " put down the chopstick to his"
+					+ " left");
+			stick2 = true;
+			System.out.println("Phil" +phil_instance+ " put down the chopstick to his "
+					+ " right");
+			think_and_get_hungry(phil_instance);
+			    	
+		}	
+		if( (phil_instance == 3) && stick2 == true && stick3 == true) {
+			System.out.println("Phil"+ phil_instance + " stick2 = " + stick2 + " stick3 = " + stick3);
+			stick2 = false;
+			System.out.println("Phil" + phil_instance + " picked up the chopstick to his"
+					+ " left");
+			System.out.println("Phil" + phil_instance + " stick 2 = " + stick2);
+			stick3 = false;
+			System.out.println("Phil" +phil_instance+ " stick 3 = " + stick3);
+
+			System.out.println("Phil" +phil_instance+ " picked up the chopstick to his "
+					+ " right");
+			System.out.println("p" + phil_instance + 
+						"is eating...");
+			double startTime = System.currentTimeMillis() + 
+					Math.random() * 7500 + 7500;
+			while(startTime 
+			    	> System.currentTimeMillis())
+			{
+			    }
+			stick2 = true;
+			System.out.println("Phil" + phil_instance + " put down the chopstick to his"
+					+ " left");
+			stick3 = true;
+			System.out.println("Phil" +phil_instance+ " put down the chopstick to his "
+					+ " right");
+			think_and_get_hungry(phil_instance);
+			    	
+		}	   	
 	}
 
 
-	synchronized public static void one_pick_up_sticks() {
-
-		System.out.println("Phil" + this.philNumber + " stick0 = " + stick0 + " stick1 = " + stick1);
-		stick0 = false;
-		System.out.println("Phil" + this.philNumber + " stick 0 = " + stick0);
-		System.out.println("Phil" + this.philNumber + " picked up the chopstick to his"
-				+ " left");
-		stick1 = false;
-		System.out.println("Phil" + this.philNumber + " stick 1 = " + stick1);
-		System.out.println("Phil" + this.philNumber + " picked up the chopstick to his"
-				+ " right");
-
+	
+	public static void think_and_get_hungry(int phil_instance) {
+		System.out.println("p" + phil_instance + 
+				"is thinking...");
+	double startTime = System.currentTimeMillis() + 
+			Math.random() * 7500 + 7500;
+	while(startTime 
+	    	> System.currentTimeMillis())
+	{
+	    }
+	System.out.println("p" + phil_instance + 
+			"just got hungry...");
 	}
 
 }
-	
-		
-	
-	
-
-	
-
