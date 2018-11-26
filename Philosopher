@@ -1,117 +1,109 @@
+import java.util.concurrent.*; //IMPORT CONCURRENT TO HAVE ACCESS TO SEMAPHORE
+
+//A shared resource/class. 
+class Shared  
+{ 
+  static int count = 0; 
+}
+
 public class Philosopher extends Thread{
-	public int philNumber;
-	public String name;
-	public boolean eating;
-	public boolean hungry;
-	public boolean thinking;
+	Semaphore sem;		//DECLARE SEMAPHORE VARIABLE
+	
+	private int philNumber;
 	static boolean stick0=true;	//one boolean for each chopstick
 	static boolean stick1=true;	//true means not being used.
-	boolean stick2=true;
-	boolean stick3=true;
+	static boolean stick2=true;	//ONLY DECLARING THE CHOPSTICKS USED BY PHIL0 AND PHIL1 FOR NOW
 	static boolean stick4=true;
 	
-	//constructor created to require initial values to be specified
-	//for philosopher number, name, 
-	//whether he is eating, and whether he is hungry.
-	public Philosopher(int philNumber, String name, boolean eating, boolean hungry) {
-		this.philNumber = philNumber;
-		this.name = name;
-		this.eating = eating;
-		this.hungry = hungry;
-		this.thinking = thinking;
-		
-	}	
-	// the run method will start a philosopher eating 
-	//if he is hungry and if neither of his L or R 
-	//neighbors is eating
-
-	public void run() { 
-		System.out.println("p"+ this.philNumber + " is starting");
-		
-		if (this.philNumber == 0) {
-			if (stick4 == true && stick0 == true)
-			zero_pick_up_sticks();
-		}
-		if (this.philNumber == 1) {
-			if (stick0 == true && stick1 == true)
-				
-						one_pick_up_sticks();
-					
-				}
-			
-		}	
-		
 		
 	
+	
+	
+	//constructor created to require initial values to be specified
+	//for philosopher number
+	public Philosopher(int philNumber) {
+		this.sem = sem;
+		this.philNumber = philNumber;
+		
+		
+	}	
+	// the run method will start eat() only if the sticks to his left
+	// and to his right are available (true)
+	public void run() {
+		if (this.philNumber == 0) {
+			try {
+				sem.acquire();
+				if (stick4 == true && stick0 == true) {
+					Shared.count++;
+					eat();
+				}
+					
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
 			
-	 //Philosopher objects. 1 and 3 are initialized at false
-	// to prevent all five philosophers from eating simultaneously
-	// at start.
-		static Philosopher p0 = new Philosopher(0,"Confucius", false, false);
-		static Philosopher p1 = new Philosopher(1, "Socrates", true, true);
-		static Philosopher p2 = new Philosopher(2, "Plato", false, false);
-		static Philosopher p3 = new Philosopher(3, "Descartes", true, true);
-		static Philosopher p4 = new Philosopher(4, "Sartre", false, false );
+		}
+		if (this.philNumber == 1) {
+			try {
+				sem.acquire();
+				if (stick0 == true && stick1 == true) {
+					Shared.count++;
+					eat();
+				}
+					
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		}
+		
+		static Philosopher p0 = new Philosopher(0);//	ONLY INSTANTIATING TWO OBJECTS FOR NOW
+		static Philosopher p1 = new Philosopher(1);
+		
 
 			//Philosopher array
-			static Philosopher[] WiseTable = {p0, p1, p2, p3, p4};			
+			// static Philosopher[] WiseTable = {p0, p1};	//DON'T NEED THE ARRAY YET		
 				
 		
 	public static void main(String[] args) {
-		
-			
+		System.out.println("stick0 = " + stick0 + " stick1 = " + stick1);
+		//VERIFY THAT STICK0 AND STICK1 START OUT AVAILABLE (TRUE)
 		
 		p0.start();		//each objects starts the run()
 		p1.start();
-		//p2.start();
-		//p3.start();
-		//p4.start();		
+		
+		
 		
 }
 	
-	
-	    	
 	    	public void eat() {
-	    		
-	    		one_pick_up_sticks();
+	    		if (this.philNumber == 0) { //CHECK TO SEE WHICH PHIL HAS RUN()
+	    			System.out.println("p0 started...");// INDICATE WHICH PHIL HAS RUN()
+	    			stick4 = false; //PHIL0 PICKS UP STICK4 ON HIS LEFT
+	    			System.out.println(this.philNumber + "picked up " + stick4);
+	    					
+	    			
+	    			stick0 = false;//PHIL0 PICKS UP STICK0 ON HIS RIGHT
+	    			
+	    			System.out.println(this.philNumber + "picked up " + stick0);	
+	    		}
+	    		if (this.philNumber == 1) {//CHECK TO SEE WHICH PHIL HAS RUN()
+	    			System.out.println("p1 started...");// INDICATE WHICH PHIL HAS RUN()
+	    			stick0 = false;//PHIL1 PICKS UP STICK0 ON HIS LEFT
+	    			System.out.println(this.philNumber + "picked up " + stick0);
+	    			
+	    			stick1 = false;//PHIL1 PICKS UP STICK1 ON HIS RIGHT
+	    			
+	    			System.out.println(this.philNumber + "picked up " + stick1);
 	    		}
 	    		
 	    		
 	    		
-	    		
-	    	
-	    	synchronized public void zero_pick_up_sticks() {
-	    		
-	    		
-	    			System.out.println(this.philNumber + "stick4 = " + stick4 + " stick0 = " + stick0);
-	    			stick4 = false;
-	    			System.out.println(this.philNumber + " picked up the chopstick to his"
-	    					+ " left");
-	    			System.out.println(this.philNumber + "stick 4 = " + stick4);
-	    			stick0 = false;
-	    			System.out.println(this.philNumber + " picked up the chopstick to his "
-	    					+ " right");
-	    			System.out.println(this.philNumber + "stick 0 = " + stick0);
-	    			}
-	    	
-	    	
-	    	synchronized public void one_pick_up_sticks() {
-	    		
-	    			System.out.println(this.philNumber + "stick0 = " + stick0 + " stick1 = " + stick1);
-	    			stick0 = false;
-	    			System.out.println(this.philNumber + "stick 0 = " + stick0);
-	    			System.out.println(this.philNumber + " picked up the chopstick to his"
-	    					+ " left");
-	    			stick1 = false;
-	    			System.out.println(this.philNumber + "stick 1 = " + stick1);
-	    			System.out.println(this.philNumber + " picked up the chopstick to his"
-	    					+ " right");
-	    			
 	    	}
-	    		
+	    	   	
 	}
-	
-	
 		
 	
 	
