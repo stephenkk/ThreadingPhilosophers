@@ -9,30 +9,36 @@ public class Philosopher extends Thread{
 	//constructor created to require philNumber to be specified
 	public Philosopher(int philNumber) {
 		this.philNumber = philNumber;
-		
-		
+
+
 
 	}	
-	// the run method will start a philosopher eating 
-	//will start the objects picking up sticks. Run() calls itself recursively
+	// the run method states that a phil is hungry and then 
+	//will start the phil objects picking up sticks. Run() calls itself recursively
 
-	public void run() { 
-		
+	public void run() { //timer in run() delays start up to 2.5 seconds
+						//to reduce occurrences of a phil eating twice in a row.
+		double startTime = System.currentTimeMillis() + 
+				Math.random() * 2500;
+		while(startTime 
+				> System.currentTimeMillis()) {
+			
+		}
+			System.out.println("p" + this.philNumber + 
+					" just got hungry...");
 			pick_up_sticks(this.philNumber);
-		
-			run();
-	
+
+		run();
+
 	}
-	//Philosopher objects. 1 and 3 are initialized at false
-	// to prevent all five philosophers from eating simultaneously
-	// at start.
+	//Philosopher objects. 
 	static Philosopher p0 = new Philosopher(0);
 	static Philosopher p1 = new Philosopher(1);
 	static Philosopher p2 = new Philosopher(2);
 	static Philosopher p3 = new Philosopher(3);
 	static Philosopher p4 = new Philosopher(4);
 
-	
+
 
 	public static void main(String[] args) {
 
@@ -45,46 +51,43 @@ public class Philosopher extends Thread{
 		p4.start();		
 
 	}
-
+	//synchronized method checks the philNumber, then checks if the sticks
+	//to the left and right are available (true). If they are, he will pick them up. 
+	//(set to false). After eating for a random time up to 3.5 seconds the phil
+	// will put down his sticks and call the think_and_get_hungry method.
+	
 	synchronized public static void pick_up_sticks(int phil_instance) {
 		if( (phil_instance == 0) && stick4 == true && stick0 == true) {
-			//System.out.println("Phil"+ phil_instance + " stick4 = " + stick4 + " stick0 = " + stick0);
 			stick4 = false;
 			System.out.println("p" + phil_instance + " picked up the chopstick to his"
 					+ " left");
-			//System.out.println("Phil" + phil_instance + " stick 4 = " + stick4);
 			stick0 = false;
-			//System.out.println("Phil" +phil_instance+ " stick 0 = " + stick0);
-
 			System.out.println("p" +phil_instance+ " picked up the chopstick to his "
 					+ " right");
 			System.out.println("p" + phil_instance + 
-						" is eating...");
+					" is eating...");
 			double startTime = System.currentTimeMillis() + 
 					Math.random() * 3500;
 			while(startTime 
-			    	> System.currentTimeMillis())
+					> System.currentTimeMillis())
 			{
-			    }
+			}
 			stick4 = true;
 			System.out.println("p" + phil_instance + " put down the chopstick to his"
 					+ " left");
 			stick0 = true;
 			System.out.println("p" +phil_instance+ " put down the chopstick to his "
 					+ " right");
-			think_and_get_hungry(phil_instance);
-			    	
-			    	
-			    	
+			think(phil_instance);
+
+
+
 		}
 		else if (phil_instance == 1 && stick0 == true && stick1 == true) {
-			//System.out.println("Phil" +phil_instance+ " stick0 = " + stick0 + " stick1 = " + stick1);
 			stick0 = false;
-			//System.out.println("p" +phil_instance+ " stick 0 = " + stick0);
 			System.out.println("p" +phil_instance+ " picked up the chopstick to his"
 					+ " left");
 			stick1 = false;
-			//System.out.println("Phil" +phil_instance+ " stick 1 = " + stick1);
 			System.out.println("p" +phil_instance+ " picked up the chopstick to his"
 					+ " right");
 			System.out.println("p" + phil_instance + 
@@ -92,117 +95,107 @@ public class Philosopher extends Thread{
 			double startTime = System.currentTimeMillis() + 
 					Math.random() * 3500;
 			while(startTime 
-			    	> System.currentTimeMillis())
+					> System.currentTimeMillis())
 			{
-			    }
+			}
 			stick0 = true;
 			System.out.println("p" + phil_instance + " put down the chopstick to his"
 					+ " left");
 			stick1 = true;
 			System.out.println("p" +phil_instance+ " put down the chopstick to his "
 					+ " right");
-			think_and_get_hungry(phil_instance);
-			    	
+			think(phil_instance);
+
 		}
 		if( (phil_instance == 2) && stick1 == true && stick2 == true) {
-			//System.out.println("Phil"+ phil_instance + " stick1 = " + stick1 + " stick2 = " + stick2);
 			stick1 = false;
 			System.out.println("p" + phil_instance + " picked up the chopstick to his"
 					+ " left");
-			//System.out.println("Phil" + phil_instance + " stick 1 = " + stick1);
 			stick2 = false;
-			//System.out.println("Phil" +phil_instance+ " stick 2 = " + stick2);
-
 			System.out.println("p" +phil_instance+ " picked up the chopstick to his "
 					+ " right");
 			System.out.println("p" + phil_instance + 
-						" is eating...");
+					" is eating...");
 			double startTime = System.currentTimeMillis() + 
 					Math.random() * 3500;
 			while(startTime 
-			    	> System.currentTimeMillis())
+					> System.currentTimeMillis())
 			{
-			    }
+			}
 			stick1 = true;
 			System.out.println("p" + phil_instance + " put down the chopstick to his"
 					+ " left");
 			stick2 = true;
 			System.out.println("p" +phil_instance+ " put down the chopstick to his "
 					+ " right");
-			think_and_get_hungry(phil_instance);
-			    	
+			think(phil_instance);
+
 		}	
 		if( (phil_instance == 3) && stick2 == true && stick3 == true) {
-			//System.out.println("Phil"+ phil_instance + " stick2 = " + stick2 + " stick3 = " + stick3);
 			stick2 = false;
 			System.out.println("p" + phil_instance + " picked up the chopstick to his"
 					+ " left");
-			//System.out.println("Phil" + phil_instance + " stick 2 = " + stick2);
 			stick3 = false;
-			//System.out.println("Phil" +phil_instance+ " stick 3 = " + stick3);
-
 			System.out.println("p" +phil_instance+ " picked up the chopstick to his "
 					+ " right");
 			System.out.println("p" + phil_instance + 
-						" is eating...");
+					" is eating...");
 			double startTime = System.currentTimeMillis() + 
 					Math.random() * 3500;
 			while(startTime 
-			    	> System.currentTimeMillis())
+					> System.currentTimeMillis())
 			{
-			    }
+			}
 			stick2 = true;
 			System.out.println("p" + phil_instance + " put down the chopstick to his"
 					+ " left");
 			stick3 = true;
 			System.out.println("p" +phil_instance+ " put down the chopstick to his "
 					+ " right");
-			think_and_get_hungry(phil_instance);
-			    	
+			think(phil_instance);
+
 		}
 		if( (phil_instance == 4) && stick3 == true && stick4 == true) {
-			//System.out.println("Phil"+ phil_instance + " stick2 = " + stick2 + " stick3 = " + stick3);
 			stick3 = false;
 			System.out.println("p" + phil_instance + " picked up the chopstick to his"
 					+ " left");
-			//System.out.println("Phil" + phil_instance + " stick 2 = " + stick2);
 			stick4 = false;
-			//System.out.println("Phil" +phil_instance+ " stick 3 = " + stick3);
-
 			System.out.println("p" +phil_instance+ " picked up the chopstick to his "
 					+ " right");
 			System.out.println("p" + phil_instance + 
-						" is eating...");
+					" is eating...");
 			double startTime = System.currentTimeMillis() + 
 					Math.random() * 3500;
 			while(startTime 
-			    	> System.currentTimeMillis())
+					> System.currentTimeMillis())
 			{
-			    }
+			}
 			stick3 = true;
 			System.out.println("p" + phil_instance + " put down the chopstick to his"
 					+ " left");
 			stick4 = true;
 			System.out.println("p" +phil_instance+ " put down the chopstick to his "
 					+ " right");
-			think_and_get_hungry(phil_instance);
-			    	
+			think(phil_instance);
+
 		}	   	
 	}
 
 
+	//After finishing eating, the phil will start thinking again for at least
+	//3.5 seconds and up to 7 seconds. Then he will start the run() process 
+	//over again where he waits for his two chopsticks to be available.
 	
-	public static void think_and_get_hungry(int phil_instance) {
+	public static void think(int phil_instance) {
 		System.out.println("p" + phil_instance + 
 				" is thinking...");
-	double startTime = System.currentTimeMillis() + 
-			Math.random() * 3500 + 3500;
-	while(startTime 
-	    	> System.currentTimeMillis())
-	{
-	    }
-	System.out.println("p" + phil_instance + 
-			" just got hungry...");
+		double startTime = System.currentTimeMillis() + 
+				Math.random() * 3500 + 3500;
+		while(startTime 
+				> System.currentTimeMillis())
+		{
+		}
+		
 	}
 
 }
